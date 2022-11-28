@@ -9,12 +9,7 @@ from wagtailstreamforms.models import Form
 
 
 class InfoBlock(blocks.CharBlock):
-    def render_form(self, value, prefix="", errors=None):
-        field = self.field
-        shown_value = value if value else field.help_text
-        return mark_safe(
-            '<div style="margin-top:5px;padding:0.9em 1.2em;">%s</div>' % shown_value
-        )
+    pass
 
 
 class FormChooserBlock(blocks.ChooserBlock):
@@ -40,6 +35,9 @@ class FormChooserBlock(blocks.ChooserBlock):
             except self.target_model.DoesNotExist:
                 return None
 
+    def get_form_state(self, value):
+        return self.field.widget.format_value(self.field.prepare_value(self.value_for_form(value)))
+
 
 class WagtailFormBlock(blocks.StructBlock):
     form = FormChooserBlock()
@@ -50,6 +48,9 @@ class WagtailFormBlock(blocks.StructBlock):
     form_reference = InfoBlock(
         required=False,
         help_text=_("This form will be given a unique reference once saved"),
+        # Previously InfoBlock was rendered as plain text if this block was already created.
+        # This is no longer doable with Wagtail 4, so we have to disable this field with JS.
+        classname="wagtailstreamforms-disabled",
     )
 
     class Meta:

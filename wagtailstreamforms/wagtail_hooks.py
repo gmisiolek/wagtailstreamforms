@@ -26,6 +26,11 @@ from wagtailstreamforms.utils.requests import get_form_instance_from_request
 SettingsModel = get_advanced_settings_model()
 
 
+@hooks.register("insert_global_admin_js", order=1000)
+def global_admin_js():
+    return format_html('<script src="{}"></script>', static("streamforms/admin.js"))
+
+
 class FormURLHelper(AdminURLHelper):
     def get_action_url(self, action, *args, **kwargs):
         if action in ["advanced", "copy", "submissions"]:
