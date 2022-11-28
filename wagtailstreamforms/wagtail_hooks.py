@@ -3,8 +3,10 @@ from django.contrib.admin.utils import quote
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.templatetags.static import static
 from django.urls import include, path, reverse
 from django.utils.decorators import method_decorator
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin import messages as wagtail_messages
 from wagtail.contrib.modeladmin.helpers import AdminURLHelper, ButtonHelper
