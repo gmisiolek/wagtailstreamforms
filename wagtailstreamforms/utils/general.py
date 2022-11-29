@@ -1,6 +1,6 @@
 from django.utils.text import slugify
-from unidecode import unidecode
+from anyascii import anyascii
 
 
 def get_slug_from_string(label):
-    return str(slugify(str(unidecode(label))))
+    return str(slugify(str(anyascii(label))))
